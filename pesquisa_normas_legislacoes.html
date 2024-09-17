@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa de Normas e Legislações</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            color: #2d2d2d;
+        }
+        #search-results {
+            margin-top: 20px;
+        }
+        .result {
+            background-color: #ffffff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .result a {
+            color: #f0416e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .result a:hover {
+            text-decoration: underline;
+        }
+        .summary {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Pesquisa de Normas e Legislações</h2>
+    <input type="text" id="search-input" placeholder="Digite o termo da norma ou legislação" style="width: 100%; padding: 10px; font-size: 16px;">
+    <button onclick="search()" style="margin-top: 10px; padding: 10px 20px; background-color: #f0416e; color: #fff; border: none; cursor: pointer; border-radius: 5px;">Pesquisar</button>
+
+    <div id="search-results"></div>
+
+    <script>
+        function search() {
+            var input = document.getElementById('search-input').value;
+            var resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = ''; // Limpa os resultados anteriores
+
+            // Exemplo de dados simulados (pode ser conectado a um banco de dados real no futuro)
+            var database = [
+                {
+                    title: "Lei Nº 9.074/1995",
+                    link: "https://www.planalto.gov.br/ccivil_03/leis/l9074.htm",
+                    summary: "Dispõe sobre a concessão e permissão para serviços públicos de energia elétrica e dá outras providências."
+                },
+                {
+                    title: "Resolução Normativa Nº 414/2010 - ANEEL",
+                    link: "https://www.aneel.gov.br/consultas-publicas",
+                    summary: "Estabelece as condições gerais de fornecimento de energia elétrica e os direitos e deveres dos consumidores e concessionárias."
+                },
+                {
+                    title: "Decreto Nº 5.163/2004",
+                    link: "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2004/decreto/d5163.htm",
+                    summary: "Regulamenta a comercialização de energia elétrica, a expansão do sistema elétrico e as regras de contratação de energia."
+                }
+            ];
+
+            // Filtro simples de pesquisa baseado no termo digitado
+            var results = database.filter(function(item) {
+                return item.title.toLowerCase().includes(input.toLowerCase()) || item.summary.toLowerCase().includes(input.toLowerCase());
+            });
+
+            // Exibição dos resultados
+            if (results.length > 0) {
+                results.forEach(function(result) {
+                    var resultDiv = document.createElement('div');
+                    resultDiv.classList.add('result');
+                    
+                    var link = document.createElement('a');
+                    link.href = result.link;
+                    link.target = '_blank';
+                    link.textContent = result.title;
+                    
+                    var summary = document.createElement('p');
+                    summary.classList.add('summary');
+                    summary.textContent = result.summary;
+                    
+                    resultDiv.appendChild(link);
+                    resultDiv.appendChild(summary);
+                    resultsDiv.appendChild(resultDiv);
+                });
+            } else {
+                resultsDiv.innerHTML = '<p>Nenhuma norma ou legislação encontrada.</p>';
+            }
+        }
+    </script>
+
+</body>
+</html>
